@@ -1,0 +1,16 @@
+#!/bin/sh
+
+COLOR_GREEN='\033[0;32m'
+IP=ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2
+
+echo "${COLOR_GREEN}Remove node_modules."
+rm -rf node_modules
+echo "${COLOR_GREEN}Remove yarn.lock."
+rm -f yarn.lock
+if [[ $IP =~ ^10\.15 ]]; then
+  echo "${COLOR_GREEN}Install node_modules use ayarn."
+  ayarn
+else
+  echo "${COLOR_GREEN}Install node_modules use yarn."
+  yarn
+fi

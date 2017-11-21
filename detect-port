@@ -1,0 +1,10 @@
+#!/bin/sh
+
+port=$1
+pid=`lsof -i :${port} -P -t -sTCP:LISTEN`
+dir=`lsof -p ${pid} | awk '$4=="cwd" {print $9}'`
+cmd=`ps -o command -p ${pid} | sed -n 2p`
+
+echo "dir: ${dir}"
+echo "cmd: ${cmd}"
+echo "pid: ${pid}"
